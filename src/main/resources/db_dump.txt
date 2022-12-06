@@ -1,0 +1,381 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2
+-- Dumped by pg_dump version 14.2
+
+-- Started on 2022-12-06 22:56:47
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 209 (class 1259 OID 32962)
+-- Name: course; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.course (
+    course_id bigint NOT NULL,
+    course_name character varying NOT NULL,
+    start_date timestamp without time zone NOT NULL,
+    finish_date timestamp without time zone NOT NULL,
+    is_active boolean NOT NULL
+);
+
+
+ALTER TABLE public.course OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 32965)
+-- Name: course_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.course ALTER COLUMN course_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.course_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 215 (class 1259 OID 33011)
+-- Name: course_student; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.course_student (
+    course_id bigint NOT NULL,
+    student_id bigint NOT NULL,
+    course_student_id bigint NOT NULL,
+    date timestamp without time zone NOT NULL,
+    is_active boolean NOT NULL
+);
+
+
+ALTER TABLE public.course_student OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 33039)
+-- Name: course_student_course_stident_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.course_student ALTER COLUMN course_student_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.course_student_course_stident_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 216 (class 1259 OID 33024)
+-- Name: grade; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.grade (
+    grade double precision NOT NULL,
+    student_id bigint NOT NULL,
+    subject_id integer NOT NULL,
+    grade_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.grade OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 33049)
+-- Name: grade_grade_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.grade ALTER COLUMN grade_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.grade_grade_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 211 (class 1259 OID 32979)
+-- Name: student; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.student (
+    student_id bigint NOT NULL,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    patronymic character varying NOT NULL,
+    group_num integer NOT NULL,
+    is_active boolean NOT NULL
+);
+
+
+ALTER TABLE public.student OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 32982)
+-- Name: student_column1_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.student ALTER COLUMN student_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.student_column1_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 213 (class 1259 OID 32990)
+-- Name: subject; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.subject (
+    subject_id bigint NOT NULL,
+    subject_name character varying NOT NULL,
+    max_grade double precision NOT NULL,
+    course_id bigint NOT NULL,
+    date timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.subject OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 32993)
+-- Name: subject_subject_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.subject ALTER COLUMN subject_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.subject_subject_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 3338 (class 0 OID 32962)
+-- Dependencies: 209
+-- Data for Name: course; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.course (course_id, course_name, start_date, finish_date, is_active) FROM stdin;
+2	Statictic	2022-12-04 10:16:34	2023-03-04 10:00:00	t
+3	Mathematic	2022-12-15 04:00:00	2023-03-04 04:00:00	t
+\.
+
+
+--
+-- TOC entry 3344 (class 0 OID 33011)
+-- Dependencies: 215
+-- Data for Name: course_student; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.course_student (course_id, student_id, course_student_id, date, is_active) FROM stdin;
+3	1	29	2022-12-04 10:00:00	t
+\.
+
+
+--
+-- TOC entry 3345 (class 0 OID 33024)
+-- Dependencies: 216
+-- Data for Name: grade; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.grade (grade, student_id, subject_id, grade_id) FROM stdin;
+89	1	2	3
+96	1	3	4
+0	1	1	5
+\.
+
+
+--
+-- TOC entry 3340 (class 0 OID 32979)
+-- Dependencies: 211
+-- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.student (student_id, first_name, last_name, patronymic, group_num, is_active) FROM stdin;
+1	Vasily	Petrov	Sergeevich	1	t
+2	Alex	Ivanov	Alexeevich	2	t
+\.
+
+
+--
+-- TOC entry 3342 (class 0 OID 32990)
+-- Dependencies: 213
+-- Data for Name: subject; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.subject (subject_id, subject_name, max_grade, course_id, date) FROM stdin;
+1	Intro	100	2	2022-12-29 17:00:00
+3	Basic-12	100	3	2022-12-01 08:00:00
+2	Basic-52	90	3	2022-12-02 08:00:00
+\.
+
+
+--
+-- TOC entry 3353 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.course_id_seq', 3, true);
+
+
+--
+-- TOC entry 3354 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: course_student_course_stident_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.course_student_course_stident_id_seq', 29, true);
+
+
+--
+-- TOC entry 3355 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: grade_grade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.grade_grade_id_seq', 5, true);
+
+
+--
+-- TOC entry 3356 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: student_column1_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.student_column1_seq', 2, true);
+
+
+--
+-- TOC entry 3357 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: subject_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.subject_subject_id_seq', 3, true);
+
+
+--
+-- TOC entry 3185 (class 2606 OID 32970)
+-- Name: course course_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course
+    ADD CONSTRAINT course_pk PRIMARY KEY (course_id);
+
+
+--
+-- TOC entry 3191 (class 2606 OID 33048)
+-- Name: course_student course_student_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_student
+    ADD CONSTRAINT course_student_pk PRIMARY KEY (course_student_id);
+
+
+--
+-- TOC entry 3193 (class 2606 OID 33054)
+-- Name: grade grade_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grade
+    ADD CONSTRAINT grade_pk PRIMARY KEY (grade_id);
+
+
+--
+-- TOC entry 3187 (class 2606 OID 32987)
+-- Name: student student_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT student_pk PRIMARY KEY (student_id);
+
+
+--
+-- TOC entry 3189 (class 2606 OID 32998)
+-- Name: subject subject_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subject
+    ADD CONSTRAINT subject_pk PRIMARY KEY (subject_id);
+
+
+--
+-- TOC entry 3194 (class 2606 OID 33006)
+-- Name: subject course_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subject
+    ADD CONSTRAINT course_fkey FOREIGN KEY (course_id) REFERENCES public.course(course_id) NOT VALID;
+
+
+--
+-- TOC entry 3195 (class 2606 OID 33014)
+-- Name: course_student course_student_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_student
+    ADD CONSTRAINT course_student_fk FOREIGN KEY (course_id) REFERENCES public.course(course_id);
+
+
+--
+-- TOC entry 3196 (class 2606 OID 33019)
+-- Name: course_student course_student_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.course_student
+    ADD CONSTRAINT course_student_fk_1 FOREIGN KEY (student_id) REFERENCES public.student(student_id);
+
+
+--
+-- TOC entry 3197 (class 2606 OID 33029)
+-- Name: grade fkagm3qsmjrdpsgd0d57ad205sm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grade
+    ADD CONSTRAINT fkagm3qsmjrdpsgd0d57ad205sm FOREIGN KEY (student_id) REFERENCES public.student(student_id);
+
+
+--
+-- TOC entry 3198 (class 2606 OID 33034)
+-- Name: grade fkklo1hstme0edtjecmleb6dv1u; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grade
+    ADD CONSTRAINT fkklo1hstme0edtjecmleb6dv1u FOREIGN KEY (subject_id) REFERENCES public.subject(subject_id);
+
+
+-- Completed on 2022-12-06 22:56:47
+
+--
+-- PostgreSQL database dump complete
+--
+
